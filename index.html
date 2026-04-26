@@ -45,7 +45,7 @@
        Make sure the matching section has id="your-section-id"
     ====================================================== */
     nav { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; animation: fadeUp 0.5s ease both; }
-    nav a { background: rgba(232,236,218,0.5); border: 0.5px solid var(--teal-border); border-radius: 20px; padding: 5px 14px; font-size: 12px; letter-spacing: 0.06em; color: var(--teal-deep); text-decoration: none; transition: background 0.2s, transform 0.15s; }
+    nav a { background: rgba(232,236,218,0.5); border: 0.5px solid var(--teal-border); border-radius: 20px; padding: 5px 14px; font-size: 13px; letter-spacing: 0.06em; color: var(--teal-deep); text-decoration: none; transition: background 0.2s, transform 0.15s; }
     nav a:hover { background: rgba(232,236,218,0.85); transform: translateY(-2px); }
 
     /* =====================================================
@@ -62,7 +62,7 @@
     .avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
 
     .hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 28px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-deep); margin-bottom: 4px; }
-    .hero .tagline { font-size: 13px; color: var(--teal-mid); letter-spacing: 0.08em; margin-bottom: 10px; }
+    .hero .tagline { font-size: 14px; color: var(--teal-mid); letter-spacing: 0.08em; margin-bottom: 10px; }
     .hero .bio { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px; color: var(--teal-mid); line-height: 1.7; max-width: 300px; margin: 8px auto 0; }
     .dot { display: inline-block; width: 4px; height: 4px; background: var(--teal-soft); border-radius: 50%; margin: 0 5px; vertical-align: middle; opacity: 0.7; }
 
@@ -74,7 +74,7 @@
        To rename a section: edit the text inside .section-label
     ====================================================== */
     section { background: var(--card-bg); border: 0.5px solid var(--teal-light); border-radius: 16px; padding: 20px 22px; margin-bottom: 12px; animation: fadeUp 0.7s ease both; backdrop-filter: blur(4px); }
-    .section-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-soft); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+    .section-label { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-soft); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
     .section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--teal-light); }
 
     /* =====================================================
@@ -83,7 +83,7 @@
        Remove: delete that line
     ====================================================== */
     .tech-grid { display: flex; flex-wrap: wrap; gap: 7px; }
-    .tech-tag { background: var(--teal-mint); border: 0.5px solid var(--teal-border); border-radius: 8px; padding: 5px 11px; font-size: 12px; color: var(--teal-deep); transition: transform 0.15s; cursor: default; }
+    .tech-tag { background: var(--teal-mint); border: 0.5px solid var(--teal-border); border-radius: 8px; padding: 6px 13px; font-size: 13px; color: var(--teal-deep); transition: transform 0.15s; cursor: default; }
     .tech-tag:hover { transform: translateY(-2px); }
 
     /* =====================================================
@@ -98,12 +98,12 @@
          </div>
        award-icon accepts any emoji: 🥇 🎖️ ⭐ 🎯 etc.
     ====================================================== */
-    .award-card { background: rgba(232,236,218,0.45); border: 0.5px solid var(--teal-light); border-radius: 10px; padding: 11px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; transition: transform 0.15s; }
+    .award-card { background: rgba(232,236,218,0.45); border: 0.5px solid var(--teal-light); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; transition: transform 0.15s; }
     .award-card:last-child { margin-bottom: 0; }
     .award-card:hover { transform: translateX(4px); }
-    .award-icon { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #b0ceca, #c0d8d4); border: 0.5px solid var(--teal-border); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-    .award-title { font-size: 14px; font-weight: 500; }
-    .award-sub { font-size: 11px; color: var(--teal-soft); margin-top: 1px; }
+    .award-icon { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #b0ceca, #c0d8d4); border: 0.5px solid var(--teal-border); display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+    .award-title { font-size: 15px; font-weight: 500; }
+    .award-sub { font-size: 12px; color: var(--teal-soft); margin-top: 1px; }
 
     /* =====================================================
        PROJECT CARDS
@@ -118,24 +118,26 @@
        To make the name a clickable link:
          <a href="https://github.com/you/repo" target="_blank" class="project-name">Name</a>
     ====================================================== */
-    .project-card { background: rgba(232,236,218,0.45); border: 0.5px solid var(--teal-light); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; transition: transform 0.15s; }
+    .project-card { background: rgba(232,236,218,0.45); border: 0.5px solid var(--teal-light); border-radius: 10px; padding: 14px 16px; margin-bottom: 8px; transition: transform 0.15s; }
     .project-card:last-child { margin-bottom: 0; }
     .project-card:hover { transform: translateY(-2px); }
-    .project-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
-    .project-desc { font-size: 12px; color: var(--teal-mid); line-height: 1.6; margin-bottom: 8px; }
+    .project-name { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+    .project-desc { font-size: 13px; color: var(--teal-mid); line-height: 1.6; margin-bottom: 9px; }
     .project-tags { display: flex; gap: 5px; flex-wrap: wrap; }
-    .project-tag { background: var(--teal-mint); border-radius: 5px; padding: 2px 8px; font-size: 11px; color: var(--teal-deep); }
+    .project-tag { background: var(--teal-mint); border-radius: 5px; padding: 3px 9px; font-size: 12px; color: var(--teal-deep); }
 
     /* =====================================================
        POEM CARDS
        Edit poems in the POEMS array in the <script> below.
        They are automatically sorted earliest to latest.
+       poem-text font-size controls how big the poem text appears.
+       poem-meta font-size controls the date size.
     ====================================================== */
-    .poem-card { border-left: 2px solid var(--teal-soft); border-radius: 0 10px 10px 0; padding: 12px 14px; margin-bottom: 10px; background: rgba(232,236,218,0.35); transition: border-color 0.2s; }
+    .poem-card { border-left: 2px solid var(--teal-soft); border-radius: 0 10px 10px 0; padding: 14px 16px; margin-bottom: 12px; background: rgba(232,236,218,0.35); transition: border-color 0.2s; }
     .poem-card:last-of-type { margin-bottom: 0; }
     .poem-card:hover { border-color: var(--teal-deep); }
-    .poem-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--teal-deep); line-height: 1.75; margin-bottom: 6px; }
-    .poem-meta { font-size: 11px; color: var(--teal-soft); }
+    .poem-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 19px; color: var(--teal-deep); line-height: 1.75; margin-bottom: 8px; }
+    .poem-meta { font-size: 13px; color: var(--teal-soft); }
 
     /* =====================================================
        FOOTER / CONTACT
@@ -145,7 +147,7 @@
     ====================================================== */
     footer { background: var(--card-bg); border: 0.5px solid var(--teal-light); border-radius: 16px; padding: 18px 22px; text-align: center; }
     .social-links { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-    .social-btn { background: rgba(232,236,218,0.6); border: 0.5px solid var(--teal-border); border-radius: 10px; padding: 7px 16px; font-size: 12px; color: var(--teal-deep); text-decoration: none; letter-spacing: 0.04em; transition: background 0.2s, transform 0.15s; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .social-btn { background: rgba(232,236,218,0.6); border: 0.5px solid var(--teal-border); border-radius: 10px; padding: 8px 18px; font-size: 13px; color: var(--teal-deep); text-decoration: none; letter-spacing: 0.04em; transition: background 0.2s, transform 0.15s; cursor: pointer; font-family: 'DM Sans', sans-serif; }
     .social-btn:hover { background: rgba(232,236,218,0.95); transform: translateY(-2px); }
     .footer-note { margin-top: 12px; font-size: 10px; color: var(--teal-soft); letter-spacing: 0.06em; font-style: italic; font-family: 'Cormorant Garamond', serif; }
 
@@ -158,11 +160,11 @@
 
   <!-- =====================================================
     HERO SECTION
-    Change name:   edit text inside <h1>
+    Change name:    edit text inside <h1>
     Change tagline: edit text between the dots
-    Change bio:    edit the <p class="bio"> text
-    Change avatar: replace "HGTEFtFX0AAUyGA.jfif" with your filename
-                   (image must be in the same folder as this file)
+    Change bio:     edit the <p class="bio"> text
+    Change avatar:  replace "HGTEFtFX0AAUyGA.jfif" with your filename
+                    (image must be in the same folder as this file)
   ====================================================== -->
   <div class="hero" id="about">
     <div class="avatar-ring">
@@ -191,7 +193,7 @@
 
   <!-- =====================================================
     SKILLS
-    Add: <span class="tech-tag">Skill</span>
+    Add:    <span class="tech-tag">Skill</span>
     Remove: delete that line
   ====================================================== -->
   <section id="skills">
@@ -265,7 +267,7 @@
     </div>
 
     <div class="project-card">
-      <div class="project-name">Ligtas <em style="font-size:20px;color:var(--teal-soft);">(Coming Soon)</em></div>
+      <div class="project-name">Ligtas <em style="font-size:12px;color:var(--teal-soft);">(Coming Soon)</em></div>
       <div class="project-desc">A mobile app and website currently in development.</div>
       <div class="project-tags">
         <span class="project-tag">Android Application</span>
@@ -348,7 +350,7 @@ const POEMS = [
 function renderPoems() {
   const c = document.getElementById('poems-container');
   if (!POEMS.length) {
-    c.innerHTML = '<p style="font-size:30px;color:var(--teal-soft);font-style:italic;font-family:Cormorant Garamond,serif;padding:10px 0;">no verses yet.</p>';
+    c.innerHTML = '<p style="font-size:16px;color:var(--teal-soft);font-style:italic;font-family:Cormorant Garamond,serif;padding:10px 0;">no verses yet.</p>';
     return;
   }
   // Sort earliest → latest
