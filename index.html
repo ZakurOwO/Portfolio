@@ -4,341 +4,525 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Zakuro</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
   <style>
     :root {
-      --bg: #e8ecda;
-      --teal-deep: #2a5560;
-      --teal-mid: #357a82;
-      --teal-soft: #6a9fa0;
-      --teal-border: #9dc0be;
-      --teal-light: #b8d4d0;
-      --teal-mint: #d4e5e2;
-      --card-bg: rgba(232, 236, 218, 0.55);
+      --bg:         #f0f1c7;
+      --c1:         #aecdc7;
+      --c2:         #6f9c97;
+      --c3:         #428a91;
+      --c4:         #2d626a;
+      --card-bg:    rgba(240,241,199,0.60);
+      --border:     #aecdc7;
+      --text:       #2d626a;
+      --text-mid:   #428a91;
+      --text-soft:  #6f9c97;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+
     body {
       background: var(--bg);
       font-family: 'DM Sans', sans-serif;
-      color: var(--teal-deep);
+      color: var(--text);
       min-height: 100vh;
-      padding: 28px 16px 80px;
+      padding: 0 0 40px;
     }
+
+    /* subtle dot pattern */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: radial-gradient(circle, #9dc0be 1px, transparent 1px), radial-gradient(circle, #6a9fa0 1px, transparent 1px);
+      background-image:
+        radial-gradient(circle, #aecdc7 1px, transparent 1px),
+        radial-gradient(circle, #6f9c97 1px, transparent 1px);
       background-size: 60px 60px, 97px 97px;
       background-position: 0 0, 30px 30px;
-      opacity: 0.08;
+      opacity: 0.10;
       pointer-events: none;
       z-index: 0;
     }
-    .page { max-width: 480px; margin: 0 auto; position: relative; z-index: 1; }
+
+    .page { max-width: 480px; margin: 0 auto; position: relative; z-index: 1; padding: 28px 16px 120px; text-align: center; }
 
     /* =====================================================
-       NAV BAR
-       To add a nav link: <a href="#your-section-id">label</a>
-       Make sure the matching section has id="your-section-id"
+       FLOATING NAV PILL — centered, above bottom
     ====================================================== */
-    nav { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; animation: fadeUp 0.5s ease both; }
-    nav a { background: rgba(232,236,218,0.5); border: 0.5px solid var(--teal-border); border-radius: 20px; padding: 5px 14px; font-size: 13px; letter-spacing: 0.06em; color: var(--teal-deep); text-decoration: none; transition: background 0.2s, transform 0.15s; }
-    nav a:hover { background: rgba(232,236,218,0.85); transform: translateY(-2px); }
+    #tab-bar {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      gap: 4px;
+      background: rgba(45, 98, 106, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 0.5px solid rgba(174,205,199,0.30);
+      border-radius: 28px;
+      padding: 7px 10px;
+      box-shadow:
+        0 8px 32px rgba(45,98,106,0.28),
+        0 2px 8px rgba(45,98,106,0.18),
+        inset 0 0.5px 0 rgba(174,205,199,0.20);
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 7px 14px;
+      border-radius: 22px;
+      transition: background 0.22s, transform 0.15s;
+      font-family: 'DM Sans', sans-serif;
+      min-width: 56px;
+    }
+    .tab-btn:hover {
+      background: rgba(174,205,199,0.18);
+      transform: translateY(-1px);
+    }
+    .tab-btn.active {
+      background: rgba(174,205,199,0.26);
+    }
+    .tab-btn .material-icons-round {
+      font-size: 22px;
+      color: rgba(174,205,199,0.65);
+      transition: color 0.22s, transform 0.22s;
+    }
+    .tab-btn.active .material-icons-round {
+      color: #f0f1c7;
+    }
+    .tab-btn:hover .material-icons-round {
+      color: rgba(240,241,199,0.85);
+      transform: translateY(-1px);
+    }
+    .tab-label {
+      font-size: 9px;
+      letter-spacing: 0.07em;
+      color: rgba(174,205,199,0.6);
+      text-transform: lowercase;
+      transition: color 0.22s;
+    }
+    .tab-btn.active .tab-label {
+      color: #f0f1c7;
+      font-weight: 500;
+    }
 
     /* =====================================================
-       HERO — avatar, name, tagline, bio
-       Avatar size: edit width/height in .avatar-ring and .avatar-inner
-       Name size:   edit font-size in .hero h1
-       Bio size:    edit the inline style="font-size:XXpx" on the <p>
+       TAB PANELS
     ====================================================== */
-    .hero { background: linear-gradient(150deg, #b0ceca 0%, #c2d8d4 50%, #cdd4be 100%); border-radius: 20px; padding: 40px 28px 30px; text-align: center; border: 0.5px solid var(--teal-border); margin-bottom: 14px; animation: fadeUp 0.6s ease both; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeUp 0.35s ease both; }
 
-    /* AVATAR SIZE — change these two pairs of numbers to resize */
-    .avatar-ring { width: 150px; height: 150px; border-radius: 50%; border: 1.5px solid var(--teal-soft); display: flex; align-items: center; justify-content: center; background: rgba(232,236,218,0.25); margin: 0 auto 16px; }
-    .avatar-inner { width: 130px; height: 130px; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, #9dc0be, #a8c2cc); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =====================================================
+       HERO
+    ====================================================== */
+    .hero {
+      background: linear-gradient(150deg, #aecdc7 0%, #c4d9d6 45%, #dddfc0 100%);
+      border-radius: 20px;
+      padding: 48px 28px 36px;
+      text-align: center;
+      border: 0.5px solid var(--border);
+      margin-bottom: 14px;
+      box-shadow: 0 4px 24px rgba(45,98,106,0.10);
+    }
+    .avatar-ring {
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      border: 1.5px solid var(--c2);
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(240,241,199,0.25);
+      margin: 0 auto 20px;
+    }
+    .avatar-inner {
+      width: 130px; height: 130px;
+      border-radius: 50%; overflow: hidden;
+      background: linear-gradient(135deg, #aecdc7, #6f9c97);
+    }
     .avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
 
-    .hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 28px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-deep); margin-bottom: 4px; }
-    .hero .tagline { font-size: 14px; color: var(--teal-mid); letter-spacing: 0.08em; margin-bottom: 10px; }
-    .hero .bio { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px; color: var(--teal-mid); line-height: 1.7; max-width: 300px; margin: 8px auto 0; }
-    .dot { display: inline-block; width: 4px; height: 4px; background: var(--teal-soft); border-radius: 50%; margin: 0 5px; vertical-align: middle; opacity: 0.7; }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300; font-size: 30px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .hero .tagline { font-size: 14px; color: var(--text-mid); letter-spacing: 0.08em; margin-bottom: 14px; }
+    .dot { display: inline-block; width: 4px; height: 4px; background: var(--c2); border-radius: 50%; margin: 0 6px; vertical-align: middle; opacity: 0.7; }
+    .hero .bio {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 20px;
+      color: var(--text-mid); line-height: 1.7;
+      max-width: 320px; margin: 0 auto;
+    }
+
+    /* quick-links */
+    .home-links {
+      display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+      margin-top: 0;
+    }
+    .home-link-btn {
+      background: var(--card-bg);
+      border: 0.5px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 18px;
+      font-size: 13px; color: var(--text);
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: background 0.18s, transform 0.15s, box-shadow 0.15s;
+      letter-spacing: 0.04em;
+      box-shadow: 0 2px 8px rgba(45,98,106,0.08);
+    }
+    .home-link-btn:hover {
+      background: rgba(174,205,199,0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(45,98,106,0.15);
+    }
 
     /* =====================================================
-       SECTIONS
-       To add a brand new section:
-         1. Add <section id="new-id"> ... </section> in the HTML
-         2. Add <a href="#new-id">label</a> inside <nav>
-       To rename a section: edit the text inside .section-label
+       SHARED SECTION
     ====================================================== */
-    section { background: var(--card-bg); border: 0.5px solid var(--teal-light); border-radius: 16px; padding: 20px 22px; margin-bottom: 12px; animation: fadeUp 0.7s ease both; backdrop-filter: blur(4px); }
-    .section-label { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-soft); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
-    .section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--teal-light); }
+    .section-card {
+      background: var(--card-bg);
+      border: 0.5px solid var(--c1);
+      border-radius: 16px;
+      padding: 20px 22px;
+      margin-bottom: 12px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 12px rgba(45,98,106,0.07);
+    }
+    .section-label {
+      font-size: 11px; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--text-soft);
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 10px;
+      justify-content: center;
+    }
+    .section-label::before { content: ''; flex: 1; height: 0.5px; background: var(--c1); }
+    .section-label::after  { content: ''; flex: 1; height: 0.5px; background: var(--c1); }
 
     /* =====================================================
-       SKILLS / TECH TAGS
-       Add:    <span class="tech-tag">Skill Name</span>
-       Remove: delete that line
+       SKILLS
     ====================================================== */
-    .tech-grid { display: flex; flex-wrap: wrap; gap: 7px; }
-    .tech-tag { background: var(--teal-mint); border: 0.5px solid var(--teal-border); border-radius: 8px; padding: 6px 13px; font-size: 13px; color: var(--teal-deep); transition: transform 0.15s; cursor: default; }
-    .tech-tag:hover { transform: translateY(-2px); }
+    .tech-grid { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; }
+    .tech-tag {
+      background: rgba(174,205,199,0.35);
+      border: 0.5px solid var(--border);
+      border-radius: 8px; padding: 6px 13px;
+      font-size: 13px; color: var(--text);
+      transition: transform 0.15s, background 0.15s; cursor: default;
+    }
+    .tech-tag:hover { transform: translateY(-2px); background: rgba(174,205,199,0.55); }
 
     /* =====================================================
-       ACHIEVEMENT CARDS
-       To add one, copy this block inside the section:
-         <div class="award-card">
-           <div class="award-icon">🏆</div>
-           <div>
-             <div class="award-title">Title</div>
-             <div class="award-sub">Subtitle</div>
-           </div>
-         </div>
-       award-icon accepts any emoji: 🥇 🎖️ ⭐ 🎯 etc.
+       ACHIEVEMENTS
     ====================================================== */
-    .award-card { background: rgba(232,236,218,0.45); border: 0.5px solid var(--teal-light); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; transition: transform 0.15s; }
+    .award-card {
+      background: rgba(240,241,199,0.45);
+      border: 0.5px solid var(--c1);
+      border-radius: 10px; padding: 12px 14px; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 12px;
+      justify-content: center;
+      transition: transform 0.15s;
+    }
     .award-card:last-child { margin-bottom: 0; }
     .award-card:hover { transform: translateX(4px); }
-    .award-icon { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #b0ceca, #c0d8d4); border: 0.5px solid var(--teal-border); display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+    .award-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, #aecdc7, #6f9c97);
+      border: 0.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: #f0f1c7;
+    }
+    .award-icon .material-icons-round { font-size: 17px; }
     .award-title { font-size: 15px; font-weight: 500; }
-    .award-sub { font-size: 12px; color: var(--teal-soft); margin-top: 1px; }
+    .award-sub { font-size: 12px; color: var(--text-soft); margin-top: 1px; }
 
     /* =====================================================
-       PROJECT CARDS
-       To add a project, copy this block:
-         <div class="project-card">
-           <div class="project-name">Name</div>
-           <div class="project-desc">Description.</div>
-           <div class="project-tags">
-             <span class="project-tag">Tag</span>
-           </div>
-         </div>
-       To make the name a clickable link:
-         <a href="https://github.com/you/repo" target="_blank" class="project-name">Name</a>
+       PROJECTS
     ====================================================== */
-    .project-card { background: rgba(232,236,218,0.45); border: 0.5px solid var(--teal-light); border-radius: 10px; padding: 14px 16px; margin-bottom: 8px; transition: transform 0.15s; }
+    .project-card {
+      background: rgba(240,241,199,0.45);
+      border: 0.5px solid var(--c1);
+      border-radius: 10px; padding: 14px 16px; margin-bottom: 8px;
+      transition: transform 0.15s, box-shadow 0.15s;
+      text-align: center;
+    }
     .project-card:last-child { margin-bottom: 0; }
-    .project-card:hover { transform: translateY(-2px); }
+    .project-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(45,98,106,0.12); }
     .project-name { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
-    .project-desc { font-size: 13px; color: var(--teal-mid); line-height: 1.6; margin-bottom: 9px; }
-    .project-tags { display: flex; gap: 5px; flex-wrap: wrap; }
-    .project-tag { background: var(--teal-mint); border-radius: 5px; padding: 3px 9px; font-size: 12px; color: var(--teal-deep); }
+    .project-desc { font-size: 13px; color: var(--text-mid); line-height: 1.6; margin-bottom: 9px; }
+    .project-tags { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
+    .project-tag {
+      background: rgba(174,205,199,0.38);
+      border-radius: 5px; padding: 3px 9px;
+      font-size: 12px; color: var(--text);
+    }
 
     /* =====================================================
-       POEM CARDS
-       Edit poems in the POEMS array in the <script> below.
-       They are automatically sorted earliest to latest.
-       poem-text font-size controls how big the poem text appears.
-       poem-meta font-size controls the date size.
+       POEMS
     ====================================================== */
-    .poem-card { border-left: 2px solid var(--teal-soft); border-radius: 0 10px 10px 0; padding: 14px 16px; margin-bottom: 12px; background: rgba(232,236,218,0.35); transition: border-color 0.2s; }
+    .poem-card {
+      border-left: none;
+      border-top: 2px solid var(--c2);
+      border-radius: 10px;
+      padding: 14px 16px; margin-bottom: 12px;
+      background: rgba(240,241,199,0.35);
+      text-align: center;
+      transition: border-color 0.2s;
+    }
     .poem-card:last-of-type { margin-bottom: 0; }
-    .poem-card:hover { border-color: var(--teal-deep); }
-    .poem-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 19px; color: var(--teal-deep); line-height: 1.75; margin-bottom: 8px; }
-    .poem-meta { font-size: 13px; color: var(--teal-soft); }
+    .poem-card:hover { border-color: var(--c4); }
+    .poem-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 19px;
+      color: var(--text); line-height: 1.75; margin-bottom: 8px;
+    }
+    .poem-meta { font-size: 13px; color: var(--text-soft); }
 
     /* =====================================================
-       FOOTER / CONTACT
-       Add a link:    <a class="social-btn" href="URL" target="_blank">Label</a>
-       Remove a link: delete that line
-       Change email:  search "zakurotakana@gmail.com" in the script
+       CONTACT
     ====================================================== */
-    footer { background: var(--card-bg); border: 0.5px solid var(--teal-light); border-radius: 16px; padding: 18px 22px; text-align: center; }
-    .social-links { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-    .social-btn { background: rgba(232,236,218,0.6); border: 0.5px solid var(--teal-border); border-radius: 10px; padding: 8px 18px; font-size: 13px; color: var(--teal-deep); text-decoration: none; letter-spacing: 0.04em; transition: background 0.2s, transform 0.15s; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-    .social-btn:hover { background: rgba(232,236,218,0.95); transform: translateY(-2px); }
-    .footer-note { margin-top: 12px; font-size: 10px; color: var(--teal-soft); letter-spacing: 0.06em; font-style: italic; font-family: 'Cormorant Garamond', serif; }
+    .contact-card {
+      background: var(--card-bg);
+      border: 0.5px solid var(--c1);
+      border-radius: 16px; padding: 24px 22px; text-align: center;
+      margin-bottom: 12px;
+    }
+    .social-links { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 0; }
+    .social-btn {
+      background: rgba(174,205,199,0.28);
+      border: 0.5px solid var(--border);
+      border-radius: 10px; padding: 9px 20px;
+      font-size: 13px; color: var(--text);
+      text-decoration: none; letter-spacing: 0.04em;
+      transition: background 0.2s, transform 0.15s;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .social-btn .material-icons-round { font-size: 16px; color: var(--c3); }
+    .social-btn:hover { background: rgba(174,205,199,0.55); transform: translateY(-2px); }
+    .footer-note {
+      margin-top: 16px; font-size: 16px; color: var(--text-soft);
+      letter-spacing: 0.06em; font-style: italic;
+      font-family: 'Cormorant Garamond', serif;
+    }
 
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-    @media (max-width: 440px) { body { padding: 18px 12px 80px; } .hero { padding: 30px 18px 24px; } section { padding: 16px 16px; } }
+    @media (max-width: 440px) {
+      .page { padding: 18px 12px 120px; }
+      .hero { padding: 32px 18px 28px; }
+      .section-card { padding: 16px; }
+      .tab-btn { padding: 7px 10px; min-width: 46px; }
+      .tab-label { display: none; }
+      #tab-bar { padding: 7px 8px; }
+    }
   </style>
 </head>
 <body>
+
 <div class="page">
 
-  <!-- =====================================================
-    HERO SECTION
-    Change name:    edit text inside <h1>
-    Change tagline: edit text between the dots
-    Change bio:     edit the <p class="bio"> text
-    Change avatar:  replace "HGTEFtFX0AAUyGA.jfif" with your filename
-                    (image must be in the same folder as this file)
-  ====================================================== -->
-  <div class="hero" id="about">
-    <div class="avatar-ring">
-      <div class="avatar-inner">
-        <img src="HGTEFtFX0AAUyGA.jfif" alt="Zakuro"/>
+  <!-- HOME -->
+  <div class="tab-panel active" id="tab-home">
+    <div class="hero">
+      <div class="avatar-ring">
+        <div class="avatar-inner">
+          <img src="HGTEFtFX0AAUyGA.jfif" alt="Zakuro"/>
+        </div>
       </div>
+      <h1>Zakuro</h1>
+      <p class="tagline">
+        IT student <span class="dot"></span> developer <span class="dot"></span> writer
+      </p>
+      <p class="bio">
+        Hello! Welcome to my page. This is just where I show off my work and other stuff. :>
+      </p>
     </div>
-    <h1>Zakuro</h1>
-    <p class="tagline">
-      IT student <span class="dot"></span> developer <span class="dot"></span> writer
-    </p>
-    <!-- bio font size is controlled here with style="font-size:XXpx" -->
-    <p class="bio" style="font-size:22px;">
-      Hello! Welcome to my page. This is just where I show off my work and other stuff. :>
-    </p>
+    <div class="home-links">
+      <button class="home-link-btn" onclick="showTab('skills')">skills &amp; stack</button>
+      <button class="home-link-btn" onclick="showTab('projects')">projects</button>
+      <button class="home-link-btn" onclick="showTab('achievements')">achievements</button>
+      <button class="home-link-btn" onclick="showTab('verses')">poems</button>
+      <button class="home-link-btn" onclick="showTab('contact')">contact</button>
+    </div>
   </div>
 
-  <!-- NAV — add or remove <a> links to match your sections -->
-  <nav>
-    <a href="#about">about</a>
-    <a href="#skills">skills</a>
-    <a href="#projects">projects</a>
-    <a href="#verses">verses</a>
-    <a href="#contact">contact</a>
-  </nav>
-
-  <!-- =====================================================
-    SKILLS
-    Add:    <span class="tech-tag">Skill</span>
-    Remove: delete that line
-  ====================================================== -->
-  <section id="skills">
-    <div class="section-label">skills &amp; stack</div>
-    <div class="tech-grid">
-      <span class="tech-tag">Java</span>
-      <span class="tech-tag">Python</span>
-      <span class="tech-tag">C++</span>
-      <span class="tech-tag">SQL</span>
-      <span class="tech-tag">SQLite</span>
-      <span class="tech-tag">Android Studio</span>
-      <span class="tech-tag">Microsoft SQL</span>
-      <span class="tech-tag">Mobile Dev</span>
-      <span class="tech-tag">Canva</span>
-      <span class="tech-tag">UI Design</span>
-    </div>
-  </section>
-
-  <!-- =====================================================
-    ACHIEVEMENTS
-    Copy an award-card block to add a new achievement.
-    Use any emoji inside award-icon.
-  ====================================================== -->
-  <section id="achievements">
-    <div class="section-label">achievements</div>
-
-    <div class="award-card">
-      <div class="award-icon">&#9733;</div>
-      <div>
-        <div class="award-title">Mobile App Hackathon</div>
-        <div class="award-sub">Local Champion</div>
+  <!-- SKILLS -->
+  <div class="tab-panel" id="tab-skills">
+    <div class="section-card">
+      <div class="section-label">skills &amp; stack</div>
+      <div class="tech-grid">
+        <span class="tech-tag">Java</span>
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">C++</span>
+        <span class="tech-tag">SQL</span>
+        <span class="tech-tag">SQLite</span>
+        <span class="tech-tag">Android Studio</span>
+        <span class="tech-tag">Microsoft SQL</span>
+        <span class="tech-tag">Mobile Dev</span>
+        <span class="tech-tag">Canva</span>
+        <span class="tech-tag">UI Design</span>
       </div>
     </div>
+  </div>
 
-    <div class="award-card">
-      <div class="award-icon">&#10022;</div>
-      <div>
-        <div class="award-title">Cluster Competition</div>
-        <div class="award-sub">1st Runner Up</div>
+  <!-- ACHIEVEMENTS -->
+  <div class="tab-panel" id="tab-achievements">
+    <div class="section-card">
+      <div class="section-label">achievements</div>
+      <div class="award-card">
+        <div class="award-icon"><span class="material-icons-round">emoji_events</span></div>
+        <div>
+          <div class="award-title">Mobile App Hackathon</div>
+          <div class="award-sub">Local Champion</div>
+        </div>
+      </div>
+      <div class="award-card">
+        <div class="award-icon"><span class="material-icons-round">workspace_premium</span></div>
+        <div>
+          <div class="award-title">Cluster Competition</div>
+          <div class="award-sub">1st Runner Up</div>
+        </div>
+      </div>
+      <div class="award-card">
+        <div class="award-icon"><span class="material-icons-round">verified</span></div>
+        <div>
+          <div class="award-title">Final Exam — Java Fundamentals</div>
+          <div class="award-sub">Completion</div>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div class="award-card">
-      <div class="award-icon">&#10022;</div>
-      <div>
-        <div class="award-title">Final Exam — Java Fundamentals</div>
-        <div class="award-sub">Completion</div>
+  <!-- PROJECTS -->
+  <div class="tab-panel" id="tab-projects">
+    <div class="section-card">
+      <div class="section-label">projects</div>
+      <div class="project-card">
+        <div class="project-name">Topaz Hardware</div>
+        <div class="project-desc">A window-based hardware store system with product management, login, and an inventory interface.</div>
+        <div class="project-tags">
+          <span class="project-tag">Window-Based</span>
+          <span class="project-tag">POS / Inventory</span>
+          <span class="project-tag">SQL</span>
+          <span class="project-tag">C++</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-name">Ligtas <em style="font-size:12px;color:var(--text-soft);">(Coming Soon)</em></div>
+        <div class="project-desc">A mobile app and website currently in development.</div>
+        <div class="project-tags">
+          <span class="project-tag">Android Application</span>
+          <span class="project-tag">Flutter</span>
+          <span class="project-tag">Dart</span>
+        </div>
       </div>
     </div>
+  </div>
 
-  </section>
+  <!-- POEMS -->
+  <div class="tab-panel" id="tab-verses">
+    <div class="section-card">
+      <div class="section-label">poems</div>
+      <div id="poems-container"></div>
+    </div>
+  </div>
 
-  <!-- =====================================================
-    PROJECTS
-    Copy a project-card block to add a new project.
-    To link name to GitHub: replace <div class="project-name">
-    with <a href="URL" target="_blank" class="project-name">
-  ====================================================== -->
-  <section id="projects">
-    <div class="section-label">projects</div>
-
-    <div class="project-card">
-      <div class="project-name">Topaz Hardware</div>
-      <div class="project-desc">A window-based hardware store system with product management, login, and an inventory interface.</div>
-      <div class="project-tags">
-        <span class="project-tag">Window-Based</span>
-        <span class="project-tag">POS / Inventory</span>
-        <span class="project-tag">SQL</span>
-        <span class="project-tag">C++</span>
+  <!-- CONTACT -->
+  <div class="tab-panel" id="tab-contact">
+    <div class="contact-card">
+      <div class="section-label">contact</div>
+      <div class="social-links">
+        <a class="social-btn" href="https://twitter.com/Zakurow130" target="_blank">
+          <span class="material-icons-round">alternate_email</span> Twitter / X
+        </a>
+        <a class="social-btn" href="https://github.com/ZakurOwO" target="_blank">
+          <span class="material-icons-round">code</span> GitHub
+        </a>
+        <a class="social-btn" href="https://discord.com/users/894244412958343178" target="_blank">
+          <span class="material-icons-round">forum</span> Discord
+        </a>
+        <button class="social-btn" onclick="toggleEmailPopup(event)">
+          <span class="material-icons-round">mail_outline</span> Email
+        </button>
       </div>
+      <p class="footer-note">Firefly my beloved ✦</p>
     </div>
+  </div>
 
-    <div class="project-card">
-      <div class="project-name">Ligtas <em style="font-size:12px;color:var(--teal-soft);">(Coming Soon)</em></div>
-      <div class="project-desc">A mobile app and website currently in development.</div>
-      <div class="project-tags">
-        <span class="project-tag">Android Application</span>
-        <span class="project-tag">Flutter</span>
-        <span class="project-tag">Dart</span>
-      </div>
-    </div>
+</div><!-- /page -->
 
-  </section>
-
-  <!-- POEMS — edit the POEMS array in the script below -->
-  <section id="verses">
-    <div class="section-label">Poems</div>
-    <div id="poems-container"></div>
-  </section>
-
-  <!-- =====================================================
-    FOOTER / CONTACT
-    Add link:    <a class="social-btn" href="URL" target="_blank">Label</a>
-    Remove link: delete that line
-  ====================================================== -->
-  <footer id="contact">
-    <div class="social-links">
-      <a class="social-btn" href="https://twitter.com/Zakurow130" target="_blank">Twitter / X</a>
-      <a class="social-btn" href="https://github.com/ZakurOwO" target="_blank">GitHub</a>
-      <a class="social-btn" href="https://discord.com/users/894244412958343178" target="_blank">Discord</a>
-      <button class="social-btn" onclick="toggleEmailPopup(event)">Email</button>
-    </div>
-    <p class="footer-note" style="font-size: 30px;">Firefly my beloved &#10022;</p>
-  </footer>
-
-</div>
+<!-- FLOATING TAB BAR -->
+<nav id="tab-bar">
+  <button class="tab-btn active" onclick="showTab('home')" id="btn-home">
+    <span class="material-icons-round">home</span>
+    <span class="tab-label">home</span>
+  </button>
+  <button class="tab-btn" onclick="showTab('skills')" id="btn-skills">
+    <span class="material-icons-round">settings</span>
+    <span class="tab-label">skills</span>
+  </button>
+  <button class="tab-btn" onclick="showTab('achievements')" id="btn-achievements">
+    <span class="material-icons-round">emoji_events</span>
+    <span class="tab-label">awards</span>
+  </button>
+  <button class="tab-btn" onclick="showTab('projects')" id="btn-projects">
+    <span class="material-icons-round">folder_open</span>
+    <span class="tab-label">projects</span>
+  </button>
+  <button class="tab-btn" onclick="showTab('verses')" id="btn-verses">
+    <span class="material-icons-round">edit_note</span>
+    <span class="tab-label">poems</span>
+  </button>
+  <button class="tab-btn" onclick="showTab('contact')" id="btn-contact">
+    <span class="material-icons-round">chat_bubble_outline</span>
+    <span class="tab-label">contact</span>
+  </button>
+</nav>
 
 <!-- EMAIL POPUP -->
 <div id="email-popup" style="
   display: none;
   position: fixed;
-  bottom: 90px;
-  left: 50%;
+  bottom: 108px; left: 50%;
   transform: translateX(-50%);
-  background: #dce4da;
-  border: 0.5px solid var(--teal-border);
+  background: #dde0b8;
+  border: 0.5px solid #aecdc7;
   border-radius: 14px;
   padding: 14px 20px;
   z-index: 200;
-  box-shadow: 0 8px 30px rgba(42,85,96,0.15);
+  box-shadow: 0 8px 30px rgba(45,98,106,0.20);
   text-align: center;
   min-width: 240px;
   animation: fadeUp 0.2s ease both;
 ">
-  <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal-soft);margin-bottom:8px;">email</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--teal-deep);letter-spacing:0.04em;margin-bottom:10px;">zakurotakana@gmail.com</div>
-  <button onclick="copyEmail()" id="copy-btn" style="background:var(--teal-mint);border:0.5px solid var(--teal-soft);border-radius:8px;padding:5px 14px;font-size:11px;color:var(--teal-deep);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s;">copy</button>
+  <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#6f9c97;margin-bottom:8px;">email</div>
+  <div style="font-family:'Cormorant Garamond',serif;font-size:16px;color:#2d626a;letter-spacing:0.04em;margin-bottom:10px;">zakurotakana@gmail.com</div>
+  <button onclick="copyEmail()" id="copy-btn" style="background:rgba(174,205,199,0.4);border:0.5px solid #aecdc7;border-radius:8px;padding:5px 14px;font-size:11px;color:#2d626a;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s;">copy</button>
 </div>
 
 <script>
-// =====================================================
-// POEMS
-//
-// Poems are automatically sorted earliest → latest.
-//
-// TO ADD a poem — paste a new entry anywhere in the array:
-//   { text: "Your poem text here.", date: "may 1, 2026" },
-//
-// TO REMOVE a poem — delete its { text: "...", date: "..." }, line.
-//
-// DATE FORMAT: "mmm d, yyyy"  e.g. "apr 3, 2026" or "jan 15, 2027"
-// This keeps the auto-sort working correctly.
-// =====================================================
-const POEMS = [
+function showTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('btn-' + name).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
+const POEMS = [
   { text: "Who am I when no one is watching, when the mask falls and the performance ends? In the quiet, stripped of roles and reflections, what remains of me? And if even that feels unfamiliar — then who am I becoming?", date: "mar 3, 2026" },
   { text: "If love is the most beautiful thing we can feel, why does it carry the power to destroy us?", date: "mar 19, 2026" },
   { text: "Would I dare to know it all, even if that knowledge is the first step toward my own unraveling? What if the truth isn't meant to be understood, but endured — something that doesn't enlighten, only erases?", date: "apr 1, 2026" },
@@ -352,10 +536,9 @@ const POEMS = [
 function renderPoems() {
   const c = document.getElementById('poems-container');
   if (!POEMS.length) {
-    c.innerHTML = '<p style="font-size:16px;color:var(--teal-soft);font-style:italic;font-family:Cormorant Garamond,serif;padding:10px 0;">no verses yet.</p>';
+    c.innerHTML = '<p style="font-size:16px;color:var(--text-soft);font-style:italic;font-family:Cormorant Garamond,serif;padding:10px 0;">no verses yet.</p>';
     return;
   }
-  // Sort earliest → latest
   const sorted = [...POEMS].sort((a, b) => new Date(a.date) - new Date(b.date));
   c.innerHTML = sorted.map(p => `
     <div class="poem-card">
@@ -365,12 +548,6 @@ function renderPoems() {
   `).join('');
 }
 
-// =====================================================
-// EMAIL
-// Change your address in the two spots below:
-//   1. The display text in the popup HTML above
-//   2. The writeText() call right here ↓
-// =====================================================
 function toggleEmailPopup(e) {
   e.stopPropagation();
   const popup = document.getElementById('email-popup');
@@ -381,7 +558,7 @@ function copyEmail() {
   navigator.clipboard.writeText('zakurotakana@gmail.com').then(() => {
     const btn = document.getElementById('copy-btn');
     btn.textContent = 'copied!';
-    btn.style.background = '#b8d4cc';
+    btn.style.background = '#aecdc7';
     setTimeout(() => { btn.textContent = 'copy'; btn.style.background = ''; }, 2000);
   });
 }
