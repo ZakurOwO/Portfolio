@@ -57,8 +57,8 @@
     .hero { background: linear-gradient(150deg, #b0ceca 0%, #c2d8d4 50%, #cdd4be 100%); border-radius: 20px; padding: 40px 28px 30px; text-align: center; border: 0.5px solid var(--teal-border); margin-bottom: 14px; animation: fadeUp 0.6s ease both; }
 
     /* AVATAR SIZE — change these two pairs of numbers to resize */
-    .avatar-ring { width: 120px; height: 120px; border-radius: 50%; border: 1.5px solid var(--teal-soft); display: flex; align-items: center; justify-content: center; background: rgba(232,236,218,0.25); margin: 0 auto 16px; }
-    .avatar-inner { width: 104px; height: 104px; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, #9dc0be, #a8c2cc); }
+    .avatar-ring { width: 150px; height: 150px; border-radius: 50%; border: 1.5px solid var(--teal-soft); display: flex; align-items: center; justify-content: center; background: rgba(232,236,218,0.25); margin: 0 auto 16px; }
+    .avatar-inner { width: 130px; height: 130px; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, #9dc0be, #a8c2cc); }
     .avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
 
     .hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 28px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-deep); margin-bottom: 4px; }
@@ -348,7 +348,7 @@ const POEMS = [
 function renderPoems() {
   const c = document.getElementById('poems-container');
   if (!POEMS.length) {
-    c.innerHTML = '<p style="font-size:13px;color:var(--teal-soft);font-style:italic;font-family:Cormorant Garamond,serif;padding:10px 0;">no verses yet.</p>';
+    c.innerHTML = '<p style="font-size:22px;color:var(--teal-soft);font-style:italic;font-family:Cormorant Garamond,serif;padding:10px 0;">no verses yet.</p>';
     return;
   }
   // Sort earliest → latest
