@@ -8,15 +8,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      /* New palette from the color swatch image */
-      --bg: #e8ecda;               /* creamy ivory — lightest */
-      --teal-deep: #2a5560;        /* deep slate teal — darkest */
-      --teal-mid: #357a82;         /* true teal */
-      --teal-soft: #6a9fa0;        /* muted teal */
-      --teal-border: #9dc0be;      /* sage-teal border */
-      --teal-light: #b8d4d0;       /* soft sage-teal light */
-      --teal-mint: #d4e5e2;        /* very soft teal tint */
-      --card-bg: rgba(232, 236, 218, 0.55); /* ivory card background */
+      --bg: #e8ecda;
+      --teal-deep: #2a5560;
+      --teal-mid: #357a82;
+      --teal-soft: #6a9fa0;
+      --teal-border: #9dc0be;
+      --teal-light: #b8d4d0;
+      --teal-mint: #d4e5e2;
+      --card-bg: rgba(232, 236, 218, 0.55);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -39,46 +38,117 @@
       z-index: 0;
     }
     .page { max-width: 480px; margin: 0 auto; position: relative; z-index: 1; }
+
+    /* =====================================================
+       NAV BAR
+       To add a nav link: <a href="#your-section-id">label</a>
+       Make sure the matching section has id="your-section-id"
+    ====================================================== */
     nav { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; animation: fadeUp 0.5s ease both; }
-    nav a { background: rgba(232,236,218,0.5); border: 0.5px solid var(--teal-border); border-radius: 20px; padding: 5px 14px; font-size: 11px; letter-spacing: 0.06em; color: var(--teal-deep); text-decoration: none; transition: background 0.2s, transform 0.15s; }
+    nav a { background: rgba(232,236,218,0.5); border: 0.5px solid var(--teal-border); border-radius: 20px; padding: 5px 14px; font-size: 12px; letter-spacing: 0.06em; color: var(--teal-deep); text-decoration: none; transition: background 0.2s, transform 0.15s; }
     nav a:hover { background: rgba(232,236,218,0.85); transform: translateY(-2px); }
+
+    /* =====================================================
+       HERO — avatar, name, tagline, bio
+       Avatar size: edit width/height in .avatar-ring and .avatar-inner
+       Name size:   edit font-size in .hero h1
+       Bio size:    edit the inline style="font-size:XXpx" on the <p>
+    ====================================================== */
     .hero { background: linear-gradient(150deg, #b0ceca 0%, #c2d8d4 50%, #cdd4be 100%); border-radius: 20px; padding: 40px 28px 30px; text-align: center; border: 0.5px solid var(--teal-border); margin-bottom: 14px; animation: fadeUp 0.6s ease both; }
-    .avatar-ring { width: 96px; height: 96px; border-radius: 50%; border: 1.5px solid var(--teal-soft); display: flex; align-items: center; justify-content: center; background: rgba(232,236,218,0.25); margin: 0 auto 16px; }
-    .avatar-inner { width: 82px; height: 82px; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, #9dc0be, #a8c2cc); }
+
+    /* AVATAR SIZE — change these two pairs of numbers to resize */
+    .avatar-ring { width: 120px; height: 120px; border-radius: 50%; border: 1.5px solid var(--teal-soft); display: flex; align-items: center; justify-content: center; background: rgba(232,236,218,0.25); margin: 0 auto 16px; }
+    .avatar-inner { width: 104px; height: 104px; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, #9dc0be, #a8c2cc); }
     .avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
-    .hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 24px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-deep); margin-bottom: 4px; }
-    .hero .tagline { font-size: 11px; color: var(--teal-mid); letter-spacing: 0.08em; margin-bottom: 10px; }
+
+    .hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 28px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-deep); margin-bottom: 4px; }
+    .hero .tagline { font-size: 13px; color: var(--teal-mid); letter-spacing: 0.08em; margin-bottom: 10px; }
     .hero .bio { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px; color: var(--teal-mid); line-height: 1.7; max-width: 300px; margin: 8px auto 0; }
     .dot { display: inline-block; width: 4px; height: 4px; background: var(--teal-soft); border-radius: 50%; margin: 0 5px; vertical-align: middle; opacity: 0.7; }
+
+    /* =====================================================
+       SECTIONS
+       To add a brand new section:
+         1. Add <section id="new-id"> ... </section> in the HTML
+         2. Add <a href="#new-id">label</a> inside <nav>
+       To rename a section: edit the text inside .section-label
+    ====================================================== */
     section { background: var(--card-bg); border: 0.5px solid var(--teal-light); border-radius: 16px; padding: 20px 22px; margin-bottom: 12px; animation: fadeUp 0.7s ease both; backdrop-filter: blur(4px); }
-    .section-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-soft); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+    .section-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-soft); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
     .section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--teal-light); }
+
+    /* =====================================================
+       SKILLS / TECH TAGS
+       Add:    <span class="tech-tag">Skill Name</span>
+       Remove: delete that line
+    ====================================================== */
     .tech-grid { display: flex; flex-wrap: wrap; gap: 7px; }
-    .tech-tag { background: var(--teal-mint); border: 0.5px solid var(--teal-border); border-radius: 8px; padding: 5px 11px; font-size: 11px; color: var(--teal-deep); transition: transform 0.15s; cursor: default; }
+    .tech-tag { background: var(--teal-mint); border: 0.5px solid var(--teal-border); border-radius: 8px; padding: 5px 11px; font-size: 12px; color: var(--teal-deep); transition: transform 0.15s; cursor: default; }
     .tech-tag:hover { transform: translateY(-2px); }
+
+    /* =====================================================
+       ACHIEVEMENT CARDS
+       To add one, copy this block inside the section:
+         <div class="award-card">
+           <div class="award-icon">🏆</div>
+           <div>
+             <div class="award-title">Title</div>
+             <div class="award-sub">Subtitle</div>
+           </div>
+         </div>
+       award-icon accepts any emoji: 🥇 🎖️ ⭐ 🎯 etc.
+    ====================================================== */
     .award-card { background: rgba(232,236,218,0.45); border: 0.5px solid var(--teal-light); border-radius: 10px; padding: 11px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; transition: transform 0.15s; }
     .award-card:last-child { margin-bottom: 0; }
     .award-card:hover { transform: translateX(4px); }
     .award-icon { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #b0ceca, #c0d8d4); border: 0.5px solid var(--teal-border); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
-    .award-title { font-size: 13px; font-weight: 500; }
-    .award-sub { font-size: 10px; color: var(--teal-soft); margin-top: 1px; }
+    .award-title { font-size: 14px; font-weight: 500; }
+    .award-sub { font-size: 11px; color: var(--teal-soft); margin-top: 1px; }
+
+    /* =====================================================
+       PROJECT CARDS
+       To add a project, copy this block:
+         <div class="project-card">
+           <div class="project-name">Name</div>
+           <div class="project-desc">Description.</div>
+           <div class="project-tags">
+             <span class="project-tag">Tag</span>
+           </div>
+         </div>
+       To make the name a clickable link:
+         <a href="https://github.com/you/repo" target="_blank" class="project-name">Name</a>
+    ====================================================== */
     .project-card { background: rgba(232,236,218,0.45); border: 0.5px solid var(--teal-light); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; transition: transform 0.15s; }
     .project-card:last-child { margin-bottom: 0; }
     .project-card:hover { transform: translateY(-2px); }
-    .project-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
-    .project-desc { font-size: 11px; color: var(--teal-mid); line-height: 1.6; margin-bottom: 8px; }
+    .project-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+    .project-desc { font-size: 12px; color: var(--teal-mid); line-height: 1.6; margin-bottom: 8px; }
     .project-tags { display: flex; gap: 5px; flex-wrap: wrap; }
-    .project-tag { background: var(--teal-mint); border-radius: 5px; padding: 2px 8px; font-size: 10px; color: var(--teal-deep); }
+    .project-tag { background: var(--teal-mint); border-radius: 5px; padding: 2px 8px; font-size: 11px; color: var(--teal-deep); }
+
+    /* =====================================================
+       POEM CARDS
+       Edit poems in the POEMS array in the <script> below.
+       They are automatically sorted earliest to latest.
+    ====================================================== */
     .poem-card { border-left: 2px solid var(--teal-soft); border-radius: 0 10px 10px 0; padding: 12px 14px; margin-bottom: 10px; background: rgba(232,236,218,0.35); transition: border-color 0.2s; }
     .poem-card:last-of-type { margin-bottom: 0; }
     .poem-card:hover { border-color: var(--teal-deep); }
-    .poem-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--teal-deep); line-height: 1.75; margin-bottom: 6px; }
-    .poem-meta { font-size: 10px; color: var(--teal-soft); }
+    .poem-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: var(--teal-deep); line-height: 1.75; margin-bottom: 6px; }
+    .poem-meta { font-size: 11px; color: var(--teal-soft); }
+
+    /* =====================================================
+       FOOTER / CONTACT
+       Add a link:    <a class="social-btn" href="URL" target="_blank">Label</a>
+       Remove a link: delete that line
+       Change email:  search "zakurotakana@gmail.com" in the script
+    ====================================================== */
     footer { background: var(--card-bg); border: 0.5px solid var(--teal-light); border-radius: 16px; padding: 18px 22px; text-align: center; }
     .social-links { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
-    .social-btn { background: rgba(232,236,218,0.6); border: 0.5px solid var(--teal-border); border-radius: 10px; padding: 7px 16px; font-size: 11px; color: var(--teal-deep); text-decoration: none; letter-spacing: 0.04em; transition: background 0.2s, transform 0.15s; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .social-btn { background: rgba(232,236,218,0.6); border: 0.5px solid var(--teal-border); border-radius: 10px; padding: 7px 16px; font-size: 12px; color: var(--teal-deep); text-decoration: none; letter-spacing: 0.04em; transition: background 0.2s, transform 0.15s; cursor: pointer; font-family: 'DM Sans', sans-serif; }
     .social-btn:hover { background: rgba(232,236,218,0.95); transform: translateY(-2px); }
     .footer-note { margin-top: 12px; font-size: 10px; color: var(--teal-soft); letter-spacing: 0.06em; font-style: italic; font-family: 'Cormorant Garamond', serif; }
+
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
     @media (max-width: 440px) { body { padding: 18px 12px 80px; } .hero { padding: 30px 18px 24px; } section { padding: 16px 16px; } }
   </style>
@@ -86,6 +156,14 @@
 <body>
 <div class="page">
 
+  <!-- =====================================================
+    HERO SECTION
+    Change name:   edit text inside <h1>
+    Change tagline: edit text between the dots
+    Change bio:    edit the <p class="bio"> text
+    Change avatar: replace "HGTEFtFX0AAUyGA.jfif" with your filename
+                   (image must be in the same folder as this file)
+  ====================================================== -->
   <div class="hero" id="about">
     <div class="avatar-ring">
       <div class="avatar-inner">
@@ -96,11 +174,13 @@
     <p class="tagline">
       IT student <span class="dot"></span> developer <span class="dot"></span> poet
     </p>
-    <p class="bio" style="font-size:20px;">
-      Hello! Welcome to my page. This is just where I show off my work and other stuff.
+    <!-- bio font size is controlled here with style="font-size:XXpx" -->
+    <p class="bio" style="font-size:22px;">
+      Hello! Welcome to my page. This is just where I show off my work and other stuff. :>
     </p>
   </div>
 
+  <!-- NAV — add or remove <a> links to match your sections -->
   <nav>
     <a href="#about">about</a>
     <a href="#skills">skills</a>
@@ -109,6 +189,11 @@
     <a href="#contact">contact</a>
   </nav>
 
+  <!-- =====================================================
+    SKILLS
+    Add: <span class="tech-tag">Skill</span>
+    Remove: delete that line
+  ====================================================== -->
   <section id="skills">
     <div class="section-label">skills &amp; stack</div>
     <div class="tech-grid">
@@ -125,6 +210,11 @@
     </div>
   </section>
 
+  <!-- =====================================================
+    ACHIEVEMENTS
+    Copy an award-card block to add a new achievement.
+    Use any emoji inside award-icon.
+  ====================================================== -->
   <section id="achievements">
     <div class="section-label">achievements</div>
 
@@ -154,6 +244,12 @@
 
   </section>
 
+  <!-- =====================================================
+    PROJECTS
+    Copy a project-card block to add a new project.
+    To link name to GitHub: replace <div class="project-name">
+    with <a href="URL" target="_blank" class="project-name">
+  ====================================================== -->
   <section id="projects">
     <div class="section-label">projects</div>
 
@@ -180,11 +276,17 @@
 
   </section>
 
+  <!-- POEMS — edit the POEMS array in the script below -->
   <section id="verses">
     <div class="section-label">Poems</div>
     <div id="poems-container"></div>
   </section>
 
+  <!-- =====================================================
+    FOOTER / CONTACT
+    Add link:    <a class="social-btn" href="URL" target="_blank">Label</a>
+    Remove link: delete that line
+  ====================================================== -->
   <footer id="contact">
     <div class="social-links">
       <a class="social-btn" href="https://twitter.com/Zakurow130" target="_blank">Twitter / X</a>
@@ -192,7 +294,7 @@
       <a class="social-btn" href="https://discord.com/users/894244412958343178" target="_blank">Discord</a>
       <button class="social-btn" onclick="toggleEmailPopup(event)">Email</button>
     </div>
-    <p class="footer-note" style="font-size: 15px;"> Firefly my beloved &#10022;</p>
+    <p class="footer-note" style="font-size: 15px;">Firefly my beloved &#10022;</p>
   </footer>
 
 </div>
@@ -220,14 +322,27 @@
 </div>
 
 <script>
+// =====================================================
+// POEMS
+//
+// Poems are automatically sorted earliest → latest.
+//
+// TO ADD a poem — paste a new entry anywhere in the array:
+//   { text: "Your poem text here.", date: "may 1, 2026" },
+//
+// TO REMOVE a poem — delete its { text: "...", date: "..." }, line.
+//
+// DATE FORMAT: "mmm d, yyyy"  e.g. "apr 3, 2026" or "jan 15, 2027"
+// This keeps the auto-sort working correctly.
+// =====================================================
 const POEMS = [
+  { text: "Who am I when no one is watching, when the mask falls and the performance ends? In the quiet, stripped of roles and reflections, what remains of me? And if even that feels unfamiliar — then who am I becoming?", date: "mar 3, 2026" },
+  { text: "Would I dare to know it all, even if that knowledge is the first step toward my own unraveling? What if the truth isn't meant to be understood, but endured — something that doesn't enlighten, only erases?", date: "apr 1, 2026" },
+  { text: "No. I let it rot the day I lost the love of my life. Whatever was left decayed quietly until there was nothing worth saving. Since then, everyone has reduced to passing shadows, empty noise in a world that never cared.", date: "apr 2, 2026" },
   { text: "Take me into dreams so deep they swallow what remains of me — where silence erases my name, and even waking becomes a forgotten sin.", date: "apr 3, 2026" },
   { text: "To hear someone scream my name again, to be held tightly and told that they will never let go. To be truly understood — to look into someone's eyes again without doubt, without waiting for the moment it all falls apart.", date: "apr 7, 2026" },
   { text: "I don't look people in the eyes anymore — I only see the ways they will leave, the quiet countdown behind every smile, the expiration date stamped on everything that feels warm and good.", date: "apr 7, 2026" },
   { text: "Every beautiful thing has only ever taught me how to grieve it. I am so tired of being the one left behind — of being the ellipsis at the end of someone else's story.", date: "apr 7, 2026" },
-  { text: "No. I let it rot the day I lost the love of my life. Whatever was left decayed quietly until there was nothing worth saving. Since then, everyone has reduced to passing shadows, empty noise in a world that never cared.", date: "apr 2, 2026" },
-  { text: "Would I dare to know it all, even if that knowledge is the first step toward my own unraveling? What if the truth isn't meant to be understood, but endured — something that doesn't enlighten, only erases?", date: "apr 1, 2026" },
-  { text: "Who am I when no one is watching, when the mask falls and the performance ends? In the quiet, stripped of roles and reflections, what remains of me? And if even that feels unfamiliar — then who am I becoming?", date: "mar 3, 2026" }
 ];
 
 function renderPoems() {
@@ -236,7 +351,9 @@ function renderPoems() {
     c.innerHTML = '<p style="font-size:13px;color:var(--teal-soft);font-style:italic;font-family:Cormorant Garamond,serif;padding:10px 0;">no verses yet.</p>';
     return;
   }
-  c.innerHTML = POEMS.map(p => `
+  // Sort earliest → latest
+  const sorted = [...POEMS].sort((a, b) => new Date(a.date) - new Date(b.date));
+  c.innerHTML = sorted.map(p => `
     <div class="poem-card">
       <p class="poem-text">"${p.text}"</p>
       <div class="poem-meta">${p.date}</div>
@@ -244,6 +361,12 @@ function renderPoems() {
   `).join('');
 }
 
+// =====================================================
+// EMAIL
+// Change your address in the two spots below:
+//   1. The display text in the popup HTML above
+//   2. The writeText() call right here ↓
+// =====================================================
 function toggleEmailPopup(e) {
   e.stopPropagation();
   const popup = document.getElementById('email-popup');
