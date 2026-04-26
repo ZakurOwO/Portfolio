@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zakuro</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #dde8e5;
+      --teal-deep: #2d5a54;
+      --teal-mid: #5a8880;
+      --teal-soft: #7fa8a0;
+      --teal-border: #8fb8b0;
+      --teal-light: #c4d4d0;
+      --teal-mint: #d8ebe6;
+      --card-bg: rgba(255,255,255,0.5);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--teal-deep);
+      min-height: 100vh;
+      padding: 28px 16px 80px;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, #8fb8b0 1px, transparent 1px), radial-gradient(circle, #7fa8a0 1px, transparent 1px);
+      background-size: 60px 60px, 97px 97px;
+      background-position: 0 0, 30px 30px;
+      opacity: 0.1;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .page { max-width: 480px; margin: 0 auto; position: relative; z-index: 1; }
+    nav { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; animation: fadeUp 0.5s ease both; }
+    nav a { background: rgba(255,255,255,0.4); border: 0.5px solid var(--teal-border); border-radius: 20px; padding: 5px 14px; font-size: 11px; letter-spacing: 0.06em; color: var(--teal-deep); text-decoration: none; transition: background 0.2s, transform 0.15s; }
+    nav a:hover { background: rgba(255,255,255,0.75); transform: translateY(-2px); }
+    .hero { background: linear-gradient(150deg, #b8d8d0 0%, #c9dfd8 50%, #d4c9d8 100%); border-radius: 20px; padding: 40px 28px 30px; text-align: center; border: 0.5px solid var(--teal-border); margin-bottom: 14px; animation: fadeUp 0.6s ease both; }
+    .avatar-ring { width: 96px; height: 96px; border-radius: 50%; border: 1.5px solid var(--teal-soft); display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.25); margin: 0 auto 16px; }
+    .avatar-inner { width: 82px; height: 82px; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, #8fb8b0, #b0c8d4); }
+    .avatar-inner img { width: 100%; height: 100%; object-fit: cover; }
+    .hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 24px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-deep); margin-bottom: 4px; }
+    .hero .tagline { font-size: 11px; color: var(--teal-mid); letter-spacing: 0.08em; margin-bottom: 10px; }
+    .hero .bio { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px; color: var(--teal-mid); line-height: 1.7; max-width: 300px; margin: 8px auto 0; }
+    .dot { display: inline-block; width: 4px; height: 4px; background: var(--teal-soft); border-radius: 50%; margin: 0 5px; vertical-align: middle; opacity: 0.7; }
+    section { background: var(--card-bg); border: 0.5px solid var(--teal-light); border-radius: 16px; padding: 20px 22px; margin-bottom: 12px; animation: fadeUp 0.7s ease both; backdrop-filter: blur(4px); }
+    .section-label { font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal-soft); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+    .section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--teal-light); }
+    .tech-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tech-tag { background: var(--teal-mint); border: 0.5px solid var(--teal-border); border-radius: 8px; padding: 5px 11px; font-size: 11px; color: var(--teal-deep); transition: transform 0.15s; cursor: default; }
+    .tech-tag:hover { transform: translateY(-2px); }
+    .award-card { background: rgba(255,255,255,0.4); border: 0.5px solid var(--teal-light); border-radius: 10px; padding: 11px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; transition: transform 0.15s; }
+    .award-card:last-child { margin-bottom: 0; }
+    .award-card:hover { transform: translateX(4px); }
+    .award-icon { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #b8d8d0, #c8dfd8); border: 0.5px solid var(--teal-border); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+    .award-title { font-size: 13px; font-weight: 500; }
+    .award-sub { font-size: 10px; color: var(--teal-soft); margin-top: 1px; }
+    .project-card { background: rgba(255,255,255,0.4); border: 0.5px solid var(--teal-light); border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; transition: transform 0.15s; }
+    .project-card:last-child { margin-bottom: 0; }
+    .project-card:hover { transform: translateY(-2px); }
+    .project-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+    .project-desc { font-size: 11px; color: var(--teal-mid); line-height: 1.6; margin-bottom: 8px; }
+    .project-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+    .project-tag { background: var(--teal-mint); border-radius: 5px; padding: 2px 8px; font-size: 10px; color: var(--teal-deep); }
+    .poem-card { border-left: 2px solid var(--teal-soft); border-radius: 0 10px 10px 0; padding: 12px 14px; margin-bottom: 10px; background: rgba(255,255,255,0.3); transition: border-color 0.2s; }
+    .poem-card:last-of-type { margin-bottom: 0; }
+    .poem-card:hover { border-color: var(--teal-deep); }
+    .poem-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--teal-deep); line-height: 1.75; margin-bottom: 6px; }
+    .poem-meta { font-size: 10px; color: var(--teal-soft); }
+    footer { background: var(--card-bg); border: 0.5px solid var(--teal-light); border-radius: 16px; padding: 18px 22px; text-align: center; }
+    .social-links { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+    .social-btn { background: rgba(255,255,255,0.5); border: 0.5px solid var(--teal-border); border-radius: 10px; padding: 7px 16px; font-size: 11px; color: var(--teal-deep); text-decoration: none; letter-spacing: 0.04em; transition: background 0.2s, transform 0.15s; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .social-btn:hover { background: rgba(255,255,255,0.85); transform: translateY(-2px); }
+    .footer-note { margin-top: 12px; font-size: 10px; color: var(--teal-soft); letter-spacing: 0.06em; font-style: italic; font-family: 'Cormorant Garamond', serif; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 440px) { body { padding: 18px 12px 80px; } .hero { padding: 30px 18px 24px; } section { padding: 16px 16px; } }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- =====================================================
+    HERO SECTION — your name, tagline, bio, and avatar
+
+    TO CHANGE YOUR NAME:     edit the text inside <h1>
+    TO CHANGE YOUR TAGLINE:  edit the text between the dots
+    TO CHANGE YOUR BIO:      edit the text inside <p class="bio">
+    TO CHANGE YOUR AVATAR:   replace "avatar.jpg" with your
+                             image filename. Put the image in
+                             the same folder as index.html.
+                             Example: src="firefly.png"
+  ====================================================== -->
+  <div class="hero" id="about">
+    <div class="avatar-ring">
+      <div class="avatar-inner">
+        <img src="HGTEFtFX0AAUyGA.jfif" alt="Zakuro"/>
+      </div>
+    </div>
+    <h1>Zakuro</h1>
+    <p class="tagline">
+      IT student <span class="dot"></span> developer <span class="dot"></span> poet
+    </p>
+    <p class="bio" style="font-size:20px;">
+      Hello! Welcome to my page. This is just where I flex my work and other stuff :> I love Firefly so much btw.
+    </p>
+  </div>
+
+  <!-- NAV — add or remove <a> links here to match your sections -->
+  <nav>
+    <a href="#about">about</a>
+    <a href="#skills">skills</a>
+    <a href="#projects">projects</a>
+    <a href="#verses">verses</a>
+    <a href="#contact">contact</a>
+  </nav>
+
+  <!-- =====================================================
+    SKILLS SECTION
+
+    TO ADD A SKILL:
+      <span class="tech-tag">Your Skill Here</span>
+
+    TO REMOVE A SKILL:
+      Delete the matching <span class="tech-tag"> line.
+  ====================================================== -->
+  <section id="skills">
+    <div class="section-label">skills &amp; stack</div>
+    <div class="tech-grid">
+      <span class="tech-tag">Java</span>
+      <span class="tech-tag">Python</span>
+      <span class="tech-tag">C++</span>
+      <span class="tech-tag">SQL</span>
+      <span class="tech-tag">SQLite</span>
+      <span class="tech-tag">Android Studio</span>
+      <span class="tech-tag">Microsoft SQL</span>
+      <span class="tech-tag">Mobile Dev</span>
+      <span class="tech-tag">Canva</span>
+      <span class="tech-tag">UI Design</span>
+    </div>
+  </section>
+
+  <!-- =====================================================
+    ACHIEVEMENTS SECTION
+
+    TO ADD AN ACHIEVEMENT:
+      Copy this block and paste it before </section>:
+
+      <div class="award-card">
+        <div class="award-icon">🏆</div>
+        <div>
+          <div class="award-title">Award Name</div>
+          <div class="award-sub">Description</div>
+        </div>
+      </div>
+
+    TO REMOVE ONE: delete its entire <div class="award-card"> block.
+    ICONS: use any emoji inside <div class="award-icon">
+  ====================================================== -->
+  <section id="achievements">
+    <div class="section-label">achievements</div>
+
+    <div class="award-card">
+      <div class="award-icon">&#9733;</div>
+      <div>
+        <div class="award-title">Mobile App Hackathon</div>
+        <div class="award-sub">Local Champion</div>
+      </div>
+    </div>
+
+    <div class="award-card">
+      <div class="award-icon">&#10022;</div>
+      <div>
+        <div class="award-title">Cluster Competition</div>
+        <div class="award-sub">1st Runner Up</div>
+      </div>
+    </div>
+
+    <div class="award-card">
+      <div class="award-icon">&#10022;</div>
+      <div>
+        <div class="award-title">Final Exam Java Fundamentals</div>
+        <div class="award-sub">Completions</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+    PROJECTS SECTION
+
+    TO ADD A PROJECT:
+      Copy this block and paste it before </section>:
+
+      <div class="project-card">
+        <div class="project-name">Project Name</div>
+        <div class="project-desc">Short description here.</div>
+        <div class="project-tags">
+          <span class="project-tag">Tag</span>
+        </div>
+      </div>
+
+    TO REMOVE A PROJECT: delete its entire <div class="project-card"> block.
+    TO ADD/REMOVE TAGS: add or delete <span class="project-tag"> lines.
+  ====================================================== -->
+  <section id="projects">
+    <div class="section-label">projects</div>
+
+    <div class="project-card">
+      <div class="project-name">Topaz Hardware</div>
+      <div class="project-desc">A web-based hardware store system with product management, login, and inventory interface.</div>
+      <div class="project-tags">
+          <span class="project-tag">Window-Based</span>
+        <span class="project-tag">POS/Inventory</span>
+        <span class="project-tag">SQL</span>
+        <span class="project-tag">C++</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-name">Ligtas"(Coming soon)"</div>
+      <div class="project-desc">Mobile apps and Website.</div>
+      <div class="project-tags">
+        <span class="project-tag">Android Application</span>
+        <span class="project-tag">Flutter</span>
+        <span class="project-tag">Dart</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- =====================================================
+    VERSES SECTION
+    Poems are loaded from the POEMS array in the <script>
+    below. Edit them there, not here.
+  ====================================================== -->
+  <section id="verses">
+    <div class="section-label">Poems</div>
+    <div id="poems-container"></div>
+  </section>
+
+  <!-- =====================================================
+    CONTACT / FOOTER
+
+    TO CHANGE SOCIAL LINKS: edit the href="" values below.
+    TO ADD A LINK:    copy an <a class="social-btn"> line.
+    TO REMOVE A LINK: delete its <a class="social-btn"> line.
+    TO CHANGE EMAIL:  search for "zakurotakana@gmail.com"
+                      in the <script> below and replace it.
+    TO CHANGE FOOTER NOTE: edit the text in <p class="footer-note">.
+  ====================================================== -->
+  <footer id="contact">
+    <div class="social-links">
+      <a class="social-btn" href="https://twitter.com/Zakurow130" target="_blank">Twitter / X</a>
+      <a class="social-btn" href="https://github.com/ZakurOwO" target="_blank">GitHub</a>
+      <a class="social-btn" href="https://discord.com/users/894244412958343178" target="_blank">Discord</a>
+      <button class="social-btn" onclick="toggleEmailPopup(event)">Email</button>
+    </div>
+    <p class="footer-note" style="font-size: 15px;">I love Firefly so much that I wish she was real :> &#10022;</p>
+  </footer>
+
+</div>
+
+<!-- EMAIL POPUP -->
+<div id="email-popup" style="
+  display: none;
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f0f7f5;
+  border: 0.5px solid var(--teal-border);
+  border-radius: 14px;
+  padding: 14px 20px;
+  z-index: 200;
+  box-shadow: 0 8px 30px rgba(45,90,84,0.18);
+  text-align: center;
+  min-width: 240px;
+  animation: fadeUp 0.2s ease both;
+">
+  <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--teal-soft);margin-bottom:8px;">email</div>
+  <div style="font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--teal-deep);letter-spacing:0.04em;margin-bottom:10px;">zakurotakana@gmail.com</div>
+  <button onclick="copyEmail()" id="copy-btn" style="background:var(--teal-mint);border:0.5px solid var(--teal-soft);border-radius:8px;padding:5px 14px;font-size:11px;color:var(--teal-deep);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s;">copy</button>
+</div>
+
+<script>
+// =====================================================
+// VERSES / POEMS
+//
+// TO ADD A POEM — paste a new entry at the top:
+//   { text: "Your poem text here.", date: "may 1, 2026" },
+//
+// TO REMOVE A POEM — delete its { text: "...", date: "..." }, line.
+//
+// Keep the comma at the end of each entry except the last one.
+// =====================================================
+const POEMS = [
+  { text: "Take me into dreams so deep they swallow what remains of me — where silence erases my name, and even waking becomes a forgotten sin.", date: "apr 3, 2026" },
+  { text: "To hear someone scream my name again, to be held tightly and told that they will never let go. To be truly understood — to look into someone's eyes again without doubt, without waiting for the moment it all falls apart.", date: "apr 7, 2026" },
+  { text: "I don't look people in the eyes anymore — I only see the ways they will leave, the quiet countdown behind every smile, the expiration date stamped on everything that feels warm and good.", date: "apr 7, 2026" },
+  { text: "Every beautiful thing has only ever taught me how to grieve it. I am so tired of being the one left behind. Of being the ellipsis at the end of someone else's story.", date: "apr 7, 2026" },
+  { text: "No. I let it rot the day I lost the love of my life. Whatever was left decayed quietly until there was nothing worth saving. Since then, everyone reduced to passing shadows, empty noise in a world that never cared.", date: "apr 2, 2026" },
+  { text: "Would I dare to know it all, even if that knowledge is the first step toward my own unraveling? What if the truth isn't meant to be understood, but endured — something that doesn't enlighten, only erases?", date: "apr 1, 2026" },
+  { text: "Who am I when no one is watching, when the mask falls and the performance ends? In the quiet, stripped of roles and reflections, what remains of me? And if even that feels unfamiliar — then who am I becoming?", date: "mar 3, 2026" }
+];
+
+function renderPoems() {
+  const c = document.getElementById('poems-container');
+  if (!POEMS.length) {
+    c.innerHTML = '<p style="font-size:13px;color:#7fa8a0;font-style:italic;font-family:Cormorant Garamond,serif;padding:10px 0;">no verses yet.</p>';
+    return;
+  }
+  c.innerHTML = POEMS.map(p => `
+    <div class="poem-card">
+      <p class="poem-text">"${p.text}"</p>
+      <div class="poem-meta">${p.date}</div>
+    </div>
+  `).join('');
+}
+
+function toggleEmailPopup(e) {
+  e.stopPropagation();
+  const popup = document.getElementById('email-popup');
+  popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
+}
+
+// TO CHANGE YOUR EMAIL: replace the address in the line below
+function copyEmail() {
+  navigator.clipboard.writeText('zakurotakana@gmail.com').then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'copied!';
+    btn.style.background = '#c4e0d8';
+    setTimeout(() => { btn.textContent = 'copy'; btn.style.background = ''; }, 2000);
+  });
+}
+
+document.addEventListener('click', () => {
+  document.getElementById('email-popup').style.display = 'none';
+});
+
+renderPoems();
+</script>
+</body>
+</html>
