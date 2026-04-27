@@ -78,11 +78,11 @@
       flex-direction: column;
       align-items: center;
       gap: 2px;
-      padding: 7px 14px;
+      padding: 7px 10px;
       border-radius: 22px;
       transition: background 0.22s, transform 0.15s;
       font-family: 'DM Sans', sans-serif;
-      min-width: 56px;
+      min-width: 46px;
     }
     .tab-btn:hover {
       background: rgba(174,205,199,0.18);
@@ -215,15 +215,20 @@
     /* =====================================================
        SKILLS
     ====================================================== */
-    .tech-grid { display: flex; flex-wrap: wrap; gap: 7px; justify-content: center; }
+    .tech-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
     .tech-tag {
       background: rgba(174,205,199,0.35);
       border: 0.5px solid var(--border);
-      border-radius: 8px; padding: 6px 13px;
-      font-size: 13px; color: var(--text);
-      transition: transform 0.15s, background 0.15s; cursor: default;
+      border-radius: 14px; padding: 14px 20px;
+      color: var(--text);
+      transition: transform 0.15s, background 0.15s, box-shadow 0.15s; cursor: default;
+      box-shadow: 0 1px 4px rgba(45,98,106,0.07);
+      display: flex; flex-direction: column; align-items: center; gap: 7px;
+      min-width: 90px;
     }
-    .tech-tag:hover { transform: translateY(-2px); background: rgba(174,205,199,0.55); }
+    .tech-tag:hover { transform: translateY(-3px); background: rgba(174,205,199,0.58); box-shadow: 0 4px 14px rgba(45,98,106,0.14); }
+    .tech-icon { font-size: 26px; line-height: 1; }
+    .tech-name { font-size: 13px; font-weight: 500; letter-spacing: 0.03em; color: var(--text); }
 
     /* =====================================================
        ACHIEVEMENTS
@@ -318,6 +323,84 @@
       font-family: 'Cormorant Garamond', serif;
     }
 
+    /* =====================================================
+       ABOUT ME
+    ====================================================== */
+    .about-hero {
+      background: linear-gradient(150deg, #aecdc7 0%, #c4d9d6 45%, #dddfc0 100%);
+      border-radius: 16px; padding: 28px 24px;
+      margin-bottom: 12px;
+      border: 0.5px solid var(--border);
+      box-shadow: 0 4px 24px rgba(45,98,106,0.10);
+    }
+    .about-avatar-wrap {
+      width: 80px; height: 80px; border-radius: 50%;
+      border: 1.5px solid var(--c2);
+      overflow: hidden; margin: 0 auto 14px;
+      background: linear-gradient(135deg, #aecdc7, #6f9c97);
+    }
+    .about-avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .about-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300; font-size: 22px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text); margin-bottom: 4px;
+    }
+    .about-role {
+      font-size: 12px; color: var(--text-mid);
+      letter-spacing: 0.1em; margin-bottom: 0;
+    }
+
+    .about-block {
+      background: var(--card-bg);
+      border: 0.5px solid var(--c1);
+      border-radius: 16px; padding: 20px 22px;
+      margin-bottom: 12px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 12px rgba(45,98,106,0.07);
+    }
+    .about-block:last-child { margin-bottom: 0; }
+    .about-block p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; line-height: 1.75;
+      color: var(--text-mid); font-style: italic;
+    }
+    .about-block p + p { margin-top: 10px; }
+
+    .about-facts {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 8px; margin-bottom: 0;
+    }
+    .about-fact {
+      background: rgba(174,205,199,0.22);
+      border: 0.5px solid var(--c1);
+      border-radius: 12px; padding: 12px 14px;
+      text-align: center;
+    }
+    .about-fact-icon { font-size: 20px; margin-bottom: 4px; }
+    .about-fact-label {
+      font-size: 10px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text-soft);
+      margin-bottom: 3px;
+    }
+    .about-fact-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px; font-weight: 400;
+      color: var(--text);
+    }
+
+    .about-interests { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .about-interest {
+      background: rgba(174,205,199,0.30);
+      border: 0.5px solid var(--border);
+      border-radius: 20px; padding: 7px 16px;
+      font-size: 13px; color: var(--text);
+      display: flex; align-items: center; gap: 6px;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .about-interest:hover { transform: translateY(-2px); background: rgba(174,205,199,0.52); }
+    .about-interest .material-icons-round { font-size: 15px; color: var(--c3); }
+
     @media (max-width: 440px) {
       .page { padding: 18px 12px 120px; }
       .hero { padding: 32px 18px 28px; }
@@ -349,6 +432,7 @@
       </p>
     </div>
     <div class="home-links">
+      <button class="home-link-btn" onclick="showTab('about')">about me</button>
       <button class="home-link-btn" onclick="showTab('skills')">skills &amp; stack</button>
       <button class="home-link-btn" onclick="showTab('projects')">projects</button>
       <button class="home-link-btn" onclick="showTab('achievements')">achievements</button>
@@ -359,21 +443,71 @@
 
   <!-- SKILLS -->
   <div class="tab-panel" id="tab-skills">
+
     <div class="section-card">
-      <div class="section-label">skills &amp; stack</div>
+      <div class="section-label">languages</div>
       <div class="tech-grid">
-        <span class="tech-tag">Java</span>
-        <span class="tech-tag">Python</span>
-        <span class="tech-tag">C++</span>
-        <span class="tech-tag">SQL</span>
-        <span class="tech-tag">SQLite</span>
-        <span class="tech-tag">Android Studio</span>
-        <span class="tech-tag">Microsoft SQL</span>
-        <span class="tech-tag">Mobile Dev</span>
-        <span class="tech-tag">Canva</span>
-        <span class="tech-tag">UI Design</span>
+        <span class="tech-tag">
+          <span class="tech-icon">☕</span>
+          <span class="tech-name">Java</span>
+        </span>
+        <span class="tech-tag">
+          <span class="tech-icon">🐍</span>
+          <span class="tech-name">Python</span>
+        </span>
+        <span class="tech-tag">
+          <span class="tech-icon">⚙️</span>
+          <span class="tech-name">C++</span>
+        </span>
       </div>
     </div>
+
+    <div class="section-card">
+      <div class="section-label">databases</div>
+      <div class="tech-grid">
+        <span class="tech-tag">
+          <span class="tech-icon">🗃️</span>
+          <span class="tech-name">SQL</span>
+        </span>
+        <span class="tech-tag">
+          <span class="tech-icon">📦</span>
+          <span class="tech-name">SQLite</span>
+        </span>
+        <span class="tech-tag">
+          <span class="tech-icon">🖥️</span>
+          <span class="tech-name">Microsoft SQL</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-label">tools & platforms</div>
+      <div class="tech-grid">
+        <span class="tech-tag">
+          <span class="tech-icon">📱</span>
+          <span class="tech-name">Android Studio</span>
+        </span>
+        <span class="tech-tag">
+          <span class="tech-icon">🔧</span>
+          <span class="tech-name">Mobile Dev</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-label">design</div>
+      <div class="tech-grid">
+        <span class="tech-tag">
+          <span class="tech-icon">🎨</span>
+          <span class="tech-name">Canva</span>
+        </span>
+        <span class="tech-tag">
+          <span class="tech-icon">✏️</span>
+          <span class="tech-name">UI Design</span>
+        </span>
+      </div>
+    </div>
+
   </div>
 
   <!-- ACHIEVEMENTS -->
@@ -507,6 +641,63 @@
     </div>
   </div>
 
+  <!-- ABOUT -->
+  <div class="tab-panel" id="tab-about">
+
+    <div class="about-hero">
+      <div class="about-avatar-wrap">
+        <img src="HGTEFtFX0AAUyGA.jfif" alt="Zakuro"/>
+      </div>
+      <div class="about-name">Zakuro</div>
+      <div class="about-role">IT student <span class="dot"></span> developer <span class="dot"></span> writer</div>
+    </div>
+
+    <div class="about-block">
+      <div class="section-label">who i am</div>
+      <p>Hi! I'm Zakuro — a 21-year-old transgirl navigating life, code, and the quiet ache of becoming who I was always meant to be.</p>
+      <p>I'm drawn to melancholy the way some people are drawn to light. I find beauty in the bittersweet, in songs that make you feel too much, in poems that say what words can't quite hold.</p>
+    </div>
+
+    <div class="about-block">
+      <div class="section-label">quick facts</div>
+      <div class="about-facts">
+        <div class="about-fact">
+          <div class="about-fact-icon">🏳️‍⚧️</div>
+          <div class="about-fact-label">identity</div>
+          <div class="about-fact-val">Transgirl (MTF)</div>
+        </div>
+        <div class="about-fact">
+          <div class="about-fact-icon">🎂</div>
+          <div class="about-fact-label">age</div>
+          <div class="about-fact-val">21</div>
+        </div>
+        <div class="about-fact">
+          <div class="about-fact-icon">🎓</div>
+          <div class="about-fact-label">studying</div>
+          <div class="about-fact-val">Information Technology</div>
+        </div>
+        <div class="about-fact">
+          <div class="about-fact-icon">📍</div>
+          <div class="about-fact-label">based in</div>
+          <div class="about-fact-val">Philippines</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-block">
+      <div class="section-label">things i love</div>
+      <div class="about-interests">
+        <span class="about-interest"><span class="material-icons-round">edit</span> Writing Poems</span>
+        <span class="about-interest"><span class="material-icons-round">music_note</span> Music</span>
+        <span class="about-interest"><span class="material-icons-round">videogame_asset</span> Star Rail</span>
+        <span class="about-interest"><span class="material-icons-round">sports_esports</span> Valorant</span>
+        <span class="about-interest"><span class="material-icons-round">favorite_border</span> Melancholy</span>
+        <span class="about-interest"><span class="material-icons-round">self_improvement</span> Transitioning</span>
+      </div>
+    </div>
+
+  </div>
+
 </div><!-- /page -->
 
 <!-- FLOATING TAB BAR -->
@@ -514,6 +705,10 @@
   <button class="tab-btn active" onclick="showTab('home')" id="btn-home">
     <span class="material-icons-round">home</span>
     <span class="tab-label">home</span>
+  </button>
+  <button class="tab-btn" onclick="showTab('about')" id="btn-about">
+    <span class="material-icons-round">person</span>
+    <span class="tab-label">about</span>
   </button>
   <button class="tab-btn" onclick="showTab('skills')" id="btn-skills">
     <span class="material-icons-round">settings</span>
